@@ -18,6 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <logback-classic.version>1.4.8</logback-classic.version>
         <lombok.version>1.18.28</lombok.version>
+        <junit.version>4.13.2</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -31,6 +32,12 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-classic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
