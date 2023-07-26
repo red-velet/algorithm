@@ -212,4 +212,185 @@ public class LinkedList {
         // Step 4: Return the head of the new sorted linked list
         return dummy.next;
     }
+
+    /**
+     * 判断链表是否有环
+     *
+     * @param head 头结点
+     * @return true-有环 false-没有环
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasCycleStatic(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取链表的环的入口节点
+     *
+     * @param pHead 链表头结点
+     * @return null-没环 非null-有环返回入口节点
+     */
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        if (pHead == null || pHead.next == null) {
+            return null;
+        }
+        ListNode fast = pHead;
+        ListNode slow = pHead;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                //有环
+                slow = pHead;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+
+    
+    public static ListNode EntryNodeOfLoopStatic(ListNode pHead) {
+        if (pHead == null || pHead.next == null) {
+            return null;
+        }
+        ListNode fast = pHead;
+        ListNode slow = pHead;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                //有环
+                slow = pHead;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 链表中倒数最后k个结点
+     *
+     * @param pHead ListNode类
+     * @param k     int整型
+     * @return ListNode类
+     */
+    public ListNode FindKthToTail(ListNode pHead, int k) {
+        // write code here
+        //参数校验
+        if (pHead == null) {
+            return null;
+        }
+        int len = getLinkedListLen(pHead);
+        if (len < k) {
+            return null;
+        }
+        ListNode pre = pHead;
+        ListNode curr = pHead;
+        for (int i = 0; i < k; i++) {
+            pre = pre.next;
+        }
+        while (pre != null) {
+            curr = curr.next;
+            pre = pre.next;
+        }
+        return curr;
+    }
+
+    /**
+     * 获取单链表长度
+     *
+     * @param head 头结点
+     * @return 长度
+     */
+    public int getLinkedListLen(ListNode head) {
+        int len = 0;
+        ListNode p = head;
+        while (p != null) {
+            len++;
+            p = p.next;
+        }
+        return len;
+    }
+
+    /**
+     * 删除链表倒数第n个节点
+     *
+     * @param head ListNode类
+     * @param n    int整型
+     * @return ListNode类
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // write code here
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode curr = dummy.next;
+        ListNode removeNodeFront = curr;
+        for (int i = 0; i < n; i++) {
+            removeNodeFront = removeNodeFront.next;
+        }
+        while (removeNodeFront != null) {
+            removeNodeFront = removeNodeFront.next;
+            curr = curr.next;
+            pre = pre.next;
+        }
+        //删除节点
+        pre.next = curr.next;
+        return dummy.next;
+    }
+
+    /**
+     * 两个链表的第一个公共节点
+     *
+     * @param pHead1 链表1的头结点
+     * @param pHead2 链表2的头结点
+     * @return null-没有公共节点不相交 非空-相交节点
+     */
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if (pHead1 == null || pHead2 == null) {
+            return null;
+        }
+        ListNode p1 = pHead1;
+        ListNode p2 = pHead2;
+        while (p1 != p2) {
+            p1 = (p1 == null) ? pHead2 : p1.next;
+            p2 = (p2 == null) ? pHead1 : p2.next;
+        }
+        return p1;
+    }
 }
