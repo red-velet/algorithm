@@ -2,6 +2,8 @@ package icu.chiou.reversal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Author: chiou
@@ -279,7 +281,7 @@ public class LinkedList {
         return null;
     }
 
-    
+
     public static ListNode EntryNodeOfLoopStatic(ListNode pHead) {
         if (pHead == null || pHead.next == null) {
             return null;
@@ -392,5 +394,130 @@ public class LinkedList {
             p2 = (p2 == null) ? pHead1 : p2.next;
         }
         return p1;
+    }
+
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * @param head1 ListNode类
+     * @param head2 ListNode类
+     * @return ListNode类
+     */
+    public ListNode addInList(ListNode head1, ListNode head2) {
+        // write code here
+        //1.使用栈。添加数组
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        ListNode p1 = head1;
+        ListNode p2 = head2;
+        while (p1 != null || p2 != null) {
+            if (p1 != null) {
+                stack1.push(p1.val);
+                p1 = p1.next;
+            }
+            if (p2 != null) {
+                stack2.push(p2.val);
+                p2 = p2.next;
+            }
+        }
+        ListNode dummy = new ListNode(-1);
+        int v1, v2, sum = 0, carry = 0;
+        while (!stack1.empty() || !stack2.empty() || carry != 0) {
+            v1 = stack1.isEmpty() ? 0 : stack1.pop();
+            v2 = stack2.isEmpty() ? 0 : stack2.pop();
+            sum = v1 + v2 + carry;
+            carry = sum / 10;
+            ListNode node = new ListNode(sum % 10);
+            node.next = dummy.next;
+            dummy.next = node;
+        }
+        //3.返回结果
+        return dummy.next;
+    }
+
+    public ListNode sortInList(ListNode head) {
+        // write code here
+        ListNode p = head;
+        List<Integer> list = new ArrayList<>();
+        while (p != null) {
+            list.add(p.val);
+            p = p.next;
+        }
+        return null;
+    }
+
+    public boolean isPail(ListNode head) {
+        // write code here
+        if (head == null || head.next == null) {
+            return true;
+        }
+        //使用栈和数组存储逆序和正序
+        List<Integer> list = new ArrayList<>();
+        Stack<Integer> stack = new Stack<>();
+        ListNode p = head;
+        while (p != null) {
+            list.add(p.val);
+            stack.push(p.val);
+            p = p.next;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (!list.get(i).equals(stack.pop())) {
+                break;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * @param head ListNode类
+     * @return ListNode类
+     */
+    public ListNode oddEvenList(ListNode head) {
+        // write code here
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode odd = head; // 奇数位节点的起始点
+        ListNode even = head.next; // 偶数位节点的起始点
+        ListNode evenHead = even; // 保存偶数位节点的头部
+
+        // 将奇数位节点和偶数位节点分开
+        while (even != null && even.next != null) {
+            odd.next = even.next; // 连接奇数节点
+            odd = odd.next; // 更新奇数节点
+            even.next = odd.next; // 连接偶数节点
+            even = even.next; // 更新偶数节点
+        }
+
+        // 将偶数位节点连接到奇数位节点的尾部
+        odd.next = evenHead;
+
+        return head;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        // write code here
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode p = dummy;
+        while (p.next != null) {
+            ListNode q = p.next;
+            while (q.next != null && q.val == q.next.val) {
+                q = q.next;
+            }
+            if (q == p.next) {
+                p = p.next;
+            } else {
+                p.next = q.next;
+            }
+        }
+        return dummy.next;
     }
 }

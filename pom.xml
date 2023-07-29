@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>linkedlist</module>
+        <module>array</module>
     </modules>
 
     <properties>

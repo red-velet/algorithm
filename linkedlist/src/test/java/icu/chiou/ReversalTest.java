@@ -116,4 +116,31 @@ public class ReversalTest {
         log.debug("遍历合并后的新链表:");
         linkedList.list(listNode);
     }
+
+    /**
+     * 测试链表相加(二)
+     */
+    @Test
+    public void testAddInList() {
+        LinkedList linkedList = new LinkedList();
+        ListNode head1 = linkedList.create(3);
+        //遍历原链表1
+        log.debug("遍历原链表1:");
+        linkedList.list(head1);
+
+        ListNode head2 = new ListNode(1);
+        head2.next = new ListNode(0);
+
+        //遍历原链表2
+        log.debug("遍历原链表2:");
+        linkedList.list(head2);
+
+        //合并
+        ListNode addInList = linkedList.addInList(head1, head2);
+        //遍历合并后的新链表
+        log.debug("遍历相加后的新链表:");
+        linkedList.list(addInList);
+
+    }
+
 }
